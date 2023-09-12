@@ -77,11 +77,15 @@ export const signUp = async (registerPayload: {
 			body: JSON.stringify(registerPayload),
 		});
 		const result = await request.json();
+
 		return {
 			error: false,
 			message: result.message,
 		};
 	} catch (error) {
-		console.log(error);
+		return {
+			error: true,
+			message: "Something error...",
+		};
 	}
 };
