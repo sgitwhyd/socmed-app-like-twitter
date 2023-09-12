@@ -13,7 +13,7 @@ const ButtonProfile = ({ user }: { user: IUser }) => {
 	const handleSignOut = () => {
 		const { error, message } = signOut();
 		toast.success(message);
-		Router.replace("/");
+		Router.refresh();
 	};
 
 	return (
