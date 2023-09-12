@@ -4,8 +4,8 @@ export const getCookie = (name: string) => {
 	if (typeof document !== "undefined") {
 		const value = `; ${document.cookie}`;
 		const parts = value.split(`; ${name}=`);
-		if (parts?.length) {
-			return parts?.pop().split(";").shift();
+		if (parts && parts.length > 1) {
+			return parts[1].split(";")[0];
 		}
 	}
 };
