@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import { signUp } from "@/lib/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
+	const Router = useRouter();
 	const [showPassword, setShowPassword] = useState(false);
 	const [registerPayload, setRegisterPayload] = useState({
 		name: "",
@@ -25,9 +28,14 @@ const Register = () => {
 		e.preventDefault();
 
 		try {
-			const result = await signUp(registerPayload);
-			alert(result?.message);
-			window.location.href = "/";
+			const { message } = await signUp(registerPayload);
+			toast.success(message);
+			setRegisterPayload({
+				name: "",
+				email: "",
+				password: "",
+			});
+			Router.replace("/");
 		} catch (error) {
 			console.log(error);
 		}
@@ -43,6 +51,7 @@ const Register = () => {
 						</h1>
 						<div className="relative w-full">
 							<input
+								required
 								type="text"
 								id="name"
 								onChange={handleOnChange}
@@ -58,6 +67,7 @@ const Register = () => {
 						</div>
 						<div className="relative w-full mt-5">
 							<input
+								required
 								type="email"
 								id="email"
 								onChange={handleOnChange}
@@ -73,6 +83,7 @@ const Register = () => {
 						</div>
 						<div className="relative w-full mt-5">
 							<input
+								required
 								type={showPassword ? "text" : "password"}
 								id="password"
 								onChange={handleOnChange}
